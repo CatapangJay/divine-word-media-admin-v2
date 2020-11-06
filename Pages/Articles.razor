@@ -1,0 +1,81 @@
+﻿@page  "/articles"
+
+@using MatBlazor
+@using DivineWordAdmin.Services
+@using DivineWordAdmin.Models
+
+@inject ArticleService ArticleService
+
+<h3>Articles</h3>
+
+@if (articles == null)
+{
+    <MatProgressBar Indeterminate="true" />
+}
+else
+{
+
+    <MatButton Raised="true">Raised</MatButton>
+    <MatTable Items="@articles" LoadInitialData="true" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" RowClass="tester"
+              FilterByColumnName="Header" DebounceMilliseconds="150" class="mat-elevation-z5" id="article_table">
+        <MatTableHeader>
+            <th>Header</th>
+            <th>Article URL</th>
+            <th>Body</th>
+            <th>Author</th>
+            <th>Published On</th>
+        </MatTableHeader>
+        <MatTableRow>
+            <td id="column_header">@context.Header</td>
+            <td id="column_url">@context.ArticleUrl</td>
+            <td id="column_body">@context.Body</td>
+            <td id="column_author">@context.Author</td>
+            <td id="column_date">@context.PublishDate</td>
+        </MatTableRow>
+    </MatTable>
+}
+
+@code {
+    private IEnumerable<Article> articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await ArticleService.GetAllArticles();
+    }
+
+    private void AddArticle() {
+    }
+}
+
+<style>
+    #article_table {
+        width: 100%;
+    }
+
+    td {
+        max-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #column_header {
+        width: 30%;
+    }
+
+    #column_url {
+        width: 20%;
+    }
+
+    #column_body {
+        width: 30%;
+    }
+
+    #column_author {
+        width: 20%;
+    }
+
+    #column_date {
+        width: 10%;
+    }
+</style>
