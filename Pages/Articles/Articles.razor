@@ -14,33 +14,39 @@
 }
 else
 {
-
     <MatButton Raised="true">Raised</MatButton>
     <MatTable Items="@articles" LoadInitialData="true" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" RowClass="tester"
               FilterByColumnName="Header" DebounceMilliseconds="150" class="mat-elevation-z5" id="article_table">
         <MatTableHeader>
             <th>Header</th>
-            <th>Article URL</th>
             <th>Body</th>
             <th>Author</th>
+            <th>Image</th>
             <th>Published On</th>
+            <th>Actions</th>
         </MatTableHeader>
         <MatTableRow>
             <td id="column_header">@context.Header</td>
-            <td id="column_url">@context.ArticleUrl</td>
             <td id="column_body">@context.Body</td>
             <td id="column_author">@context.Author</td>
+            <td id="column_image"><img src="@context.ImageUrl" id="img_thumbnail" /></td>
             <td id="column_date">@context.PublishDate</td>
+            <td id="column_actions"><MatIconButton Icon="edit" Style="color: forestgreen"/><MatIconButton Icon="delete" Style="color: red"/></td>
         </MatTableRow>
     </MatTable>
 }
 
 @code {
     private IEnumerable<Article> articles;
+    //private Dictionary<string, bool> checkBoxes;
 
     protected override async Task OnInitializedAsync()
     {
         articles = await ArticleService.GetAllArticles();
+
+        //checkBoxes = articles.ToDictionary(x => x.Id, x => false);
+
+
     }
 
     private void AddArticle() {
@@ -50,6 +56,7 @@ else
 <style>
     #article_table {
         width: 100%;
+        table-layout: fixed;
     }
 
     td {
@@ -63,19 +70,27 @@ else
         width: 30%;
     }
 
-    #column_url {
-        width: 20%;
-    }
-
     #column_body {
-        width: 30%;
+        width: 25%;
     }
 
     #column_author {
-        width: 20%;
+        width: 15%;
+    }
+
+    #column_image {
+        width: 10%;
     }
 
     #column_date {
         width: 10%;
+    }
+
+    #column_action {
+        width: 10%;
+    }
+
+    #img_thumbnail {
+        max-height: 40px;
     }
 </style>

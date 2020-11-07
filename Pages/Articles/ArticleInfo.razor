@@ -1,0 +1,18 @@
+﻿@page "/articles/{Id}"
+
+@using MatBlazor
+@using DivineWordAdmin.Services
+@using DivineWordAdmin.Models
+
+@inject ArticleService ArticleService
+
+<h3>Articles</h3>
+
+<div style="display: flex; flex-direction: column; padding: 10px;" class="mat-elevation-z5 mdc-theme--surface">
+    Sample Rsdfasdf
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+}

@@ -9,6 +9,9 @@ namespace DivineWordAdmin.Models
     [FirestoreData]
     public class Article
     {
+        [FirestoreProperty(Name = "id")]
+        public string Id { get; set; }
+
         [FirestoreProperty(Name = "articleurl")]
         public string ArticleUrl { get; set; }
 
