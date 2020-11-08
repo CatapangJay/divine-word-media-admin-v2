@@ -28,6 +28,15 @@ namespace DivineWordAdmin.Services
 
             return articles;
         }
+        public async Task<IEnumerable<Article>> GetAllArticleById()
+        {
+            Query query = _firestoreDb.Collection(collectionName);
+            QuerySnapshot articlesSnapshots = await query.GetSnapshotAsync();
+
+            IEnumerable<Article> articles = articlesSnapshots.Where(snap => snap.Exists).Select(snap => { return snap.ConvertTo<Article>(); });
+
+            return articles;
+        }
         private FirestoreDb InitializeFirestore()
         {
             string fbConfigPath = Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS");

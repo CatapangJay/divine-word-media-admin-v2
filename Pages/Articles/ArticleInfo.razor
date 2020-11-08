@@ -8,11 +8,34 @@
 
 <h3>Articles</h3>
 
-<div style="display: flex; flex-direction: column; padding: 10px;" class="mat-elevation-z5 mdc-theme--surface">
-    Sample Rsdfasdf
+<div class="mat-elevation-z5 mdc-theme--surface" id="main_elevation">
+    <p>
+        <MatTextField @bind-Value="@Article.Header" Label="Header"></MatTextField>
+    </p>    
+    <p>
+        <MatTextField @bind-Value="@Article.Body" Label="Body" TextArea="true"></MatTextField>
+    </p>
 </div>
 
 @code {
     [Parameter]
     public string Id { get; set; }
+
+    private Article Article;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //checkBoxes = articles.ToDictionary(x => x.Id, x => false);
+
+
+    }
 }
+
+<style>
+    #main_elevation {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+</style>
