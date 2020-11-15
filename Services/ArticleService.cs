@@ -28,14 +28,29 @@ namespace DivineWordAdmin.Services
 
             return articles;
         }
-        public async Task<IEnumerable<Article>> GetAllArticleById()
+        public async Task<Article> GetArticleById(string articleId)
         {
-            Query query = _firestoreDb.Collection(collectionName);
-            QuerySnapshot articlesSnapshots = await query.GetSnapshotAsync();
+            try
+            {
+                DocumentReference docRef = _firestoreDb.Collection(collectionName).Document(articleId);
+                DocumentSnapshot articleSnapshot = await docRef.GetSnapshotAsync();
 
-            IEnumerable<Article> articles = articlesSnapshots.Where(snap => snap.Exists).Select(snap => { return snap.ConvertTo<Article>(); });
+                if (articleSnapshot.Exists)
+                {
+                    var article = articleSnapshot.ConvertTo<Article>();
+                    article.Id = articleSnapshot.Id;
 
-            return articles;
+                    return article;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception ex) 
+            {
+                throw;
+            }
         }
         private FirestoreDb InitializeFirestore()
         {

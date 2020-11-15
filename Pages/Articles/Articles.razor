@@ -8,14 +8,14 @@
 
 <h3>Articles</h3>
 
-@if (articles == null)
+@if (ArticleList == null)
 {
     <MatProgressBar Indeterminate="true" />
 }
 else
 {
     <MatButton Raised="true">Raised</MatButton>
-    <MatTable Items="@articles" LoadInitialData="true" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" RowClass="tester"
+    <MatTable Items="@ArticleList" LoadInitialData="true" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" RowClass="tester"
               FilterByColumnName="Header" DebounceMilliseconds="150" class="mat-elevation-z5" id="article_table">
         <MatTableHeader>
             <th>Header</th>
@@ -37,12 +37,12 @@ else
 }
 
 @code {
-    private IEnumerable<Article> articles;
+    private IEnumerable<Article> ArticleList;
     //private Dictionary<string, bool> checkBoxes;
 
     protected override async Task OnInitializedAsync()
     {
-        articles = await ArticleService.GetAllArticles();
+        ArticleList = await ArticleService.GetAllArticles();
 
         //checkBoxes = articles.ToDictionary(x => x.Id, x => false);
 

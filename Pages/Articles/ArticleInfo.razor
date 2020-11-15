@@ -8,14 +8,21 @@
 
 <h3>Articles</h3>
 
-<div class="mat-elevation-z5 mdc-theme--surface" id="main_elevation">
-    <p>
-        <MatTextField @bind-Value="@Article.Header" Label="Header"></MatTextField>
-    </p>    
-    <p>
-        <MatTextField @bind-Value="@Article.Body" Label="Body" TextArea="true"></MatTextField>
-    </p>
-</div>
+@if (Article == null)
+{
+    <MatProgressBar Indeterminate="true" />
+}
+else
+{
+    <div class="mat-elevation-z5 mdc-theme--surface" id="main_elevation">
+        <p>
+            <MatTextField @bind-Value="@Article.Header" Label="Header" id="textfield_header"></MatTextField>
+        </p>
+        <p>
+            <MatTextField @bind-Value="@Article.Body" Label="Body" TextArea="true" id="textfield_body"></MatTextField>
+        </p>
+    </div>
+}
 
 @code {
     [Parameter]
@@ -25,8 +32,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-
-        //checkBoxes = articles.ToDictionary(x => x.Id, x => false);
+        Article = await ArticleService.GetArticleById(Id);
 
 
     }
@@ -37,5 +43,11 @@
         display: flex;
         flex-direction: column;
         padding: 10px;
+    }
+    #textfield_header {
+        width: 100%;
+    }
+    #textfield_body {
+        width: 100%;
     }
 </style>
